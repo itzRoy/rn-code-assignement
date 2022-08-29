@@ -18,16 +18,16 @@ const SearchInput = ({ searchValue, handleSearchChange, onSearchBlur, clearSearc
 
         <View style={styles.container(focused)}>
 
-            {!focused && <Pressable onPress={setFocuseTrue} style={styles.searchIcon}>
+            {!searchValue && !focused ? <Pressable onPress={setFocuseTrue} style={styles.searchIcon}>
                 <AntDesign name='search1' size={25} color={colors.icon} />
                 {searchValue && <Text style={styles.text}>{searchValue}</Text>}
-            </Pressable>}
-
-            {focused && <TextInput style={styles.input} onBlur={SetFocusFalse} onFocus={setFocuseTrue} onChangeText={handleSearchChange} value={searchValue}  />}
-
-            {focused && searchValue && (<Pressable onPress={clearSearch} style={styles.Xbtn} >
+            </Pressable>: (<Pressable onPress={clearSearch} style={styles.Xbtn} >
                 <AntDesign name='close' size={20} color={colors.icon} />
             </Pressable>)}
+
+            {focused && <TextInput style={styles.input} onBlur={SetFocusFalse} onFocus={setFocuseTrue} onChangeText={handleSearchChange} value={searchValue} autoFocus  />}
+
+            {}
 
         </View>
     );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,6 +28,7 @@ const Dashboard = ({ navigation }) => {
     const [searchValue, setSearchValue] = useState('');
     const handleSearchChange = (value) => setSearchValue(value);
     const logoutHandler = () => dispatch(logout());
+    const refresh = () => dispatch(fetchInitialArticles(pageNumber));
 
     useEffect(() => {
         if (!accessToken) {
@@ -46,7 +47,7 @@ const Dashboard = ({ navigation }) => {
     }, [searchValue]);
   
   
-
+console.log(pageNumber, articles);
     const fetchMoreArticles = () => {
         if (!searchValue && !done && !error) {
             dispatch(fetchArticles(pageNumber));      
@@ -62,7 +63,8 @@ const Dashboard = ({ navigation }) => {
         setSearchValue('');
         dispatch(clearState());
     };
-    console.log(articles);
+
+    console.log(searchValue);
     const pubDate = (date) => date.split('T')[0];
     return (
         <View style={styles.wraper}>
@@ -71,10 +73,15 @@ const Dashboard = ({ navigation }) => {
                 ListHeaderComponent={<Header onSearchBlur={onSearchBlur} clearSearch={clearSearch} searchValue={searchValue} handleSearchChange={handleSearchChange} logoutHandler={logoutHandler} />} 
                 renderItem={({item}) => <ArticleCard date={pubDate(item.pub_date)} text={item.lead_paragraph} source={item.source} /> } 
                 onEndReached={fetchMoreArticles}
-                keyExtractor={item => item._id}
+                keyExtractor={ ( item, index) => index}
+                onRefresh={refresh}
+                refreshing={error?.length > 0 && loading}
             />}
 
             {articles && loading && <ActivityIndicator color={colors.secondary} />}
+
+            {!loading && !error && searchValue && articles.length == 0?<Text style={styles.noArticles}>No Articles Found</Text>:null}
+
         </View>
     );
 };

@@ -22,9 +22,14 @@ const styles = StyleSheet.create({
     },
     source: {
         fontSize: 18,
+        color: colors.text
+    },
+    text: {
+        color: colors.text,
     },
     date: {
         alignSelf: 'flex-end',
+        color: colors.text,
         fontSize: 8,
     }
 });

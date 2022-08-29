@@ -4,18 +4,18 @@ import { View, Text, TouchableHighlight } from 'react-native';
 import styles from './styles';
 import colors from '../../../../colors';
 
-const LogoutBtn = ({logoutHandler}) => {
+const Btn = ({pressHandler, text}) => {
     return (
-        <TouchableHighlight style={styles.container} onPress={logoutHandler} underlayColor={colors.secondary}>
+        <TouchableHighlight style={styles.container} onPress={pressHandler} underlayColor={colors.secondary}>
             <View >
                 <Text style={styles.text}>
-                Logout
+                    {text}
                 </Text>
             </View>
         </TouchableHighlight>
     );
 };
 
-LogoutBtn.propTypes = {};
+Btn.propTypes = {};
 
-export default LogoutBtn;
+export default Btn;
